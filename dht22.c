@@ -167,8 +167,6 @@ DHT22Result readDHT22(void)
 
 		else
 		{
-			// 콘솔에만 출력
-			fprintf(stderr,"[Error] 올바른 데이터가 아님니다. 다시 시도해주세요.\n\n");
 			result.success = 0; // 실패
 
 			return result;
