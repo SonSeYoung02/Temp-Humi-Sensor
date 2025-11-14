@@ -1,8 +1,20 @@
 /*
  * DHT22 for Raspberry Pi with WiringPi
- * Original Author: Hyun Wook Choi
- * Original Version: 0.1.0
- * Forked from: https://github.com/ccoong7/DHT22
+ * Original code by Hyun Wook Choi: https://github.com/ccoong7/DHT22
+ *
+ * dht22_json.c
+ * 
+ * Version: 0.2.0
+ *
+ * Features of this adapted version by d5c0d3:
+ * - next to temperature and humidity export of
+ *     - datetime of reading,
+ *     - seconds to successfully read,
+ *     - count of tries to read.
+ * - export in JSON format for further processing (send to 'stdout')
+ * - write other messages to 'stderr'
+ * - stop after first correct reading
+ *
  */
 
 #include <stdio.h>
