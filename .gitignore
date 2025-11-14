@@ -1,0 +1,16 @@
+# C 언어 컴파일 파일들
+*.o
+*.out
+*.exe
+a.out
+*.elf
+*.bin
+*.so
+*.a
+
+# vscode 파일들
+.vscode/
+
+# 참고한 git 파일들
+DHT22/
+esp-idf-ssd1306
