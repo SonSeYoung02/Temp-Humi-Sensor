@@ -1,12 +1,10 @@
 # C 언어 컴파일 파일들
-*.o
 *.out
 *.exe
-a.out
-*.elf
-*.bin
-*.so
-*.a
+
+# python 서버
+venv/
+__pycache__
 
 # vscode 파일들
 .vscode/
