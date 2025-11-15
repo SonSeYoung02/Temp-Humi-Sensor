@@ -83,7 +83,7 @@ def stop_c_program():
 
 @app.get("/") # 메인 화면
 def root():
-    return {"message": "Page Running"}
+    return {"message": "페이지 실행"}
 
 
 @app.get("/sensor")
@@ -95,7 +95,10 @@ def read_sensor():
 
     with data_lock:
         if latest_data is None:
-            raise HTTPException(status_code=503, detail="Sensor data not ready")
+            raise HTTPException(
+                status_code=503, 
+                detail="센서 데이터가 준비되지 않았습니다."
+            )
         return latest_data
 
 # 가상환경 실행
