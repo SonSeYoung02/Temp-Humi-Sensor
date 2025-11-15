@@ -25,7 +25,7 @@ int main(void){
 
     if(wiringPiSetupGpio() == -1){ // GPIO 초기화
         // 콘솔에만 출력
-        fprintf(stderr,"[Error] GPIO 초기화 실패");
+        fprintf(stderr,"[ERROR] GPIO 초기화 실패");
         return -1; // 초기화 실패
     }
     const int LED_TABLE[2] = {LED_PIN_BLUE, LED_PIN_LED}; // 핀 테이블
@@ -50,24 +50,24 @@ int main(void){
             if(sensor.celsius >= TEMP_HOT){
                 digitalWrite(LED_TABLE[1], HIGH); // 빨강 LED 켜기
                 // 로그와 콘솔을 분리
-                fprintf(stderr,"[info] 온도가 너무 높습니다!\n\n"); // stderr로 콘솔에서만 보고 json에는 저장되지 않게 한다.
+                fprintf(stderr,"[INFO] 온도가 너무 높습니다!\n\n"); // stderr로 콘솔에서만 보고 json에는 저장되지 않게 한다.
             }else if(sensor.celsius <= TEMP_COOL){
                 digitalWrite(LED_TABLE[0], HIGH); // 파랑 LED 켜기
                 // 로그와 콘솔을 분리
-                fprintf(stderr,"[info] 온도가 너무 낮습니다!\n\n");
+                fprintf(stderr,"[INFO] 온도가 너무 낮습니다!\n\n");
             }else{
                 digitalWrite(LED_TABLE[0], LOW); // 파랑 LED 끄기
                 digitalWrite(LED_TABLE[1], LOW); // 빨강 LED 끄기
-                fprintf(stderr,"[info] 정상 온도\n\n");
+                fprintf(stderr,"[INFO] 정상 온도\n\n");
             }
         } else {
             // 디버그용 데이터가 출력된 날짜를 출력한다.
-            fprintf(stderr,"datetime: %s\n[Error] 온습도 수집 실패\n\n",time_buff);
+            fprintf(stderr,"datetime: %s\n[ERROR] 온습도 수집 실패\n\n",time_buff);
         }
 
         delay(2000); // 2초 딜레이
     }
     
-    fprintf(stderr,"[info] 프로그램이 정상 종료되었습니다.\n");
+    fprintf(stderr,"[INFO] 프로그램이 정상 종료되었습니다.\n");
     return 0; // 정상 종료
 }

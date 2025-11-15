@@ -5,6 +5,7 @@
 # python 서버
 venv/
 __pycache__
+*.sh
 
 # vscode 파일들
 .vscode/

@@ -5,9 +5,9 @@ import json
 
 app = FastAPI()
 
-c_proc = None          # C 프로세스 객체
-latest_data = None     # 가장 최근 센서 데이터
-data_lock = threading.Lock()  # 동시 접근 보호용 락
+c_proc = None                   # C 프로세스 객체
+latest_data = None              # 가장 최근 센서 데이터
+data_lock = threading.Lock()    # 동시 접근 보호용 락
 
 
 def reader_thread():
@@ -15,22 +15,22 @@ def reader_thread():
     C 프로그램(stdout)을 계속 읽으면서
     JSON 한 줄씩 파싱해서 latest_data에 저장하는 스레드
     """
-    global latest_data, c_proc
+    global latest_data, c_proc  # 전역변수
 
-    if c_proc is None:
-        return
+    if c_proc is None:  # c_proc이 실행되지 않으면
+        return          # 종료
 
-    for line in c_proc.stdout:
-        line = line.strip()
-        if not line:
-            continue
+    for line in c_proc.stdout:  # 한줄씩 printf 내용 읽기
+        line = line.strip()     # 공백 제거
+        if not line:            # 만약 line을 다 읽으면
+            continue            # 계속하기
 
         # stderr 디버그용 출력
-        print("[C OUT]", line)
+        print("[C 출력]", line)
 
         try:
-            data = json.loads(line)
-        except json.JSONDecodeError:
+            data = json.loads(line)     # data에 json 파일을 줄단위로 로드
+        except json.JSONDecodeError:    # json 파일에서 오류 난 경우
             # JSON 아닐 경우 무시
             print("[WARN] JSON decode error, line:", line)
             continue
@@ -45,21 +45,24 @@ def start_c_program():
     FastAPI 서버 시작 시 C 프로그램 실행 + reader_thread 시작
     """
     global c_proc
-    # TempHumiControl.out 경로는 server.py 기준 상대경로로 맞춰줘
-    c_proc = subprocess.Popen(
-        ["../TempHumiControl.out"],  # 필요하면 "./TempHumiControl.out" 등으로 수정
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        bufsize=1,
+    # TempHumiControl.out 경로는 server.py 기준 상대경로
+    c_proc = subprocess.Popen(      # 프로세스 관리 모듈
+        ["../TempHumiControl.out"], # 사용할 파일 입력
+        stdout=subprocess.PIPE,     # 표준 출력에 연결
+        stderr=subprocess.PIPE,     # 표준 에러에 연결
+        text=True,                  # 텍스트 모드
+        bufsize=1,                  # 버퍼 크기 1
     )
     print("[INFO] C program started, pid =", c_proc.pid)
 
     # C stderr 출력도 보고 싶으면 별도 스레드로 읽어도 됨 (선택)
 
     # stdout 읽는 스레드 시작
-    t = threading.Thread(target=reader_thread, daemon=True)
-    t.start()
+    t = threading.Thread(
+        target=reader_thread,   # 스레드 함수명
+        daemon=True             # 데몬 스레드 여부(true)
+    )
+    t.start()   #Thread 시작
 
 
 @app.on_event("shutdown")
@@ -69,16 +72,16 @@ def stop_c_program():
     """
     global c_proc
     if c_proc and c_proc.poll() is None:
-        print("[INFO] Terminating C program...")
-        c_proc.terminate()
+        print("[INFO] C 프로그램 종료")
+        c_proc.terminate() # 외부 프로세스 종료
         try:
-            c_proc.wait(timeout=3)
+            c_proc.wait(timeout=3)  # 3초 이상 기다릴 경우
         except subprocess.TimeoutExpired:
-            c_proc.kill()
-        print("[INFO] C program stopped")
+            c_proc.kill()           # 프로세스 종료
+        print("[INFO] C 프로그램 종료")
 
 
-@app.get("/")
+@app.get("/") # 메인 화면
 def root():
     return {"message": "Page Running"}
 
@@ -92,11 +95,8 @@ def read_sensor():
 
     with data_lock:
         if latest_data is None:
-            # 아직 C가 아무 데이터도 안 뿌린 상태
             raise HTTPException(status_code=503, detail="Sensor data not ready")
         return latest_data
 
 # 가상환경 실행
 # source venv/bin/activate
-# 서버 실행
-# uvicorn server:app --host 0.0.0.0 --port 8000
