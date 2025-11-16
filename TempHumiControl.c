@@ -74,11 +74,10 @@ int main(int argc, char *argv[]){
             }
             if (i == 0)
             {
-                fprintf(stderr,"[INFO] 성공적으로 I2C bus가 열림 %d\n", iChannel);
+                fprintf(stderr,"[INFO] I2C bus 채널 %d\n", iChannel);
                 oledFill(0); // 화면 검은색으로 설정
                 oledWriteString(3,1,buf_line_1,FONT_NORMAL);
                 oledWriteString(3,2,buf_line_2,FONT_NORMAL);
-                oledShutdown(); // 화면 끄기
                 for (i=0; i<64; i++)
                 {
                     oledSetPixel(i, 16+i, 1);
@@ -87,7 +86,7 @@ int main(int argc, char *argv[]){
             }
             else
             {
-                fprintf(stderr,"[ERROR] I2C 버스 0-2를 초기화할 수 없음. 'i2cdetect -y <channel>로 주소 확인\n");
+                fprintf(stderr,"[ERROR] I2C 버스 0-2를 초기화할 수 없음.\n'i2cdetect -y <channel>로 주소 확인\n");
             }
 
             //json 형대로 출력
@@ -113,6 +112,6 @@ int main(int argc, char *argv[]){
         }
         delay(2000); // 2초 딜레이(DHT22 습도 센서 측정 속도 맞춰주기)
     }
-    return 0; // 정상 종료
+    return 0;
 }
 
