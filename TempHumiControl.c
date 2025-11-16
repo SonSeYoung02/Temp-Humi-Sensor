@@ -54,7 +54,7 @@ int main(int argc, char *argv[]){
             // 디스플레이 변수 선언
             int i, iChannel;
             int iOLEDAddr = 0x3c; // 디스플레이 주소 0x3c
-            int iOLEDType = OLED_128x32; // 디스플레이 크기 설정
+            int iOLEDType = OLED_132x64; // 디스플레이 크기 설정(132 * 64 픽셀)
             int bFlip = 0, bInvert = 0; // 화면 상하 반전, 화면 배경 설정(흰 or 검)
 
             char buf_line_1[20]; // 디스플레이 1번째 줄
@@ -76,13 +76,8 @@ int main(int argc, char *argv[]){
             {
                 fprintf(stderr,"[INFO] I2C bus 채널 %d\n", iChannel);
                 oledFill(0); // 화면 검은색으로 설정
-                oledWriteString(3,1,buf_line_1,FONT_NORMAL);
-                oledWriteString(3,2,buf_line_2,FONT_NORMAL);
-                for (i=0; i<64; i++)
-                {
-                    oledSetPixel(i, 16+i, 1);
-                    oledSetPixel(127-i, 16+i, 1);
-                }
+                oledWriteString(3,3,buf_line_1,FONT_NORMAL); // X,Y 좌표 설정 | 폰트 사이즈
+                oledWriteString(3,5,buf_line_2,FONT_NORMAL); // X,Y 좌표 설정 | 폰트 사이즈
             }
             else
             {
