@@ -22,7 +22,7 @@
 
 #define DHT22 18 // GPIO 18번(물리적 핀 12번)
 
-// 코드 추가
+/* 코드 추가 시작 */
 typedef struct{ // 구조체 선언
 	float humidity;
 	float celsius;
@@ -32,10 +32,10 @@ typedef struct{ // 구조체 선언
 
 short readData(void);
 extern unsigned short data[5]; // 해당 데이터 전역변수로 설정
-// 코드 추가 끝
 
 static const unsigned short signal = DHT22; // GPIO 18번 읽기(물리적 12번핀)
 unsigned short data[5] = {0, 0, 0, 0, 0};
+/* 코드 추가 끝 */
 
 short readData()
 {
@@ -160,6 +160,8 @@ DHT22Result readDHT22(void)
 			}
 
 			result.fahrenheit = ((result.celsius * 9) / 5) + 32;
+
+			/* 코드 추가 시작 */
 			result.success = 1; // 성공
 			
 			return result;
@@ -171,6 +173,7 @@ DHT22Result readDHT22(void)
 
 			return result;
 		}
+		/* 코드 추가 끝*/
 
 		// Initialize data array for next loop
 		for (unsigned char i = 0; i < 5; i++) // 배열 초기화

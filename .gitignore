@@ -9,7 +9,3 @@ __pycache__
 
 # vscode 파일들
 .vscode/
-
-# 참고한 git 파일들
-DHT22/
-esp-idf-ssd1306/

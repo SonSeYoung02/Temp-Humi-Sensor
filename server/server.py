@@ -32,7 +32,7 @@ def reader_thread():
             data = json.loads(line)     # data에 json 파일을 줄단위로 로드
         except json.JSONDecodeError:    # json 파일에서 오류 난 경우
             # JSON 아닐 경우 무시
-            print("[WARN] JSON decode error, line:", line)
+            print("[ERROR] JSON 변환 오류, line:", line)
             continue
 
         with data_lock:
@@ -53,7 +53,7 @@ def start_c_program():
         text=True,                  # 텍스트 모드
         bufsize=1,                  # 버퍼 크기 1
     )
-    print("[INFO] C program started, pid =", c_proc.pid)
+    print("[INFO] C 프로그램 시작, pid =", c_proc.pid)
 
     # C stderr 출력도 보고 싶으면 별도 스레드로 읽어도 됨 (선택)
 
