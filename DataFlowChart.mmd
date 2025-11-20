@@ -1,0 +1,19 @@
+flowchart TB
+    dht["DHT22 센서"]
+    rpi["RaspberryPi(데이터 수집 모듈)"]
+
+    led_logic["LED 제어 로직실행 및 판단"]
+    ctrl_sig["GPIO 핀 동작"]
+    led_mod["LED 모듈 (켜짐/꺼짐)"]
+
+    app["안드로이드 스튜디오 앱"]
+    server["FastApi 서버"]
+
+    dht -->|"온도·습도 데이터"|rpi
+
+    rpi -->|"온도·습도 데이터 전달"| led_logic
+    led_logic -->|"제어 신호"| ctrl_sig
+    ctrl_sig -->|"LED 켜짐/꺼짐"| led_mod
+
+    rpi -->|"Json형식 문자열 전달"| server
+    server -->|"Get(IP주소/sensor)<br>온습도 데이터 전달"| app
