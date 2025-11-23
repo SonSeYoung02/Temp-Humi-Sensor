@@ -55,8 +55,6 @@ def start_c_program():
     )
     print("[INFO] C 프로그램 시작, pid =", c_proc.pid)
 
-    # C stderr 출력도 보고 싶으면 별도 스레드로 읽어도 됨 (선택)
-
     # stdout 읽는 스레드 시작
     t = threading.Thread(
         target=reader_thread,   # 스레드 함수명
@@ -100,6 +98,3 @@ def read_sensor():
                 detail="센서 데이터가 준비되지 않았습니다."
             )
         return latest_data
-
-# 가상환경 실행
-# source venv/bin/activate
