@@ -8,8 +8,8 @@
 #include "oled96.h"
 
 // 온도 설정
-#define TEMP_HOT 30 // 너무 뜨거운 온도(30도)
-#define TEMP_COOL 25 // 너무 추운 온도(20도)
+#define TEMP_HOT 27 // 너무 뜨거운 온도
+#define TEMP_COOL 25 // 너무 추운 온도
 
 // LED 설정
 #define LED_PIN_BLUE 17 // 물리적 PIN 11번
@@ -19,7 +19,7 @@
 typedef struct {
     float humidity; // 습도
     float celsius; // 온도
-    float fahrenheit;
+    float fahrenheit; // 화씨
     int success; // 성공 여부
 } DHT22Result;
 

@@ -1,4 +1,8 @@
 # Temp-Humi-Sensor
+## 컴파일
+```bash
+gcc dht22.c fonts.c TempHumiControl.c oled96.c -o TempHumiControl.out -lwiringPi
+```
 ## 개요
 ## 부품
 ## 설계도면
