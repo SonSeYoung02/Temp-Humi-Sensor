@@ -14,11 +14,13 @@ uvicorn server:app --host 0.0.0.0 --port 8000
 - uvicorn 서버 실행 0.0.0.0 에 8000번 포트(로컬 실행)
 - venv 가상환경 끄기 `deactivate`
 ## 개요
-온습도를 체크할 수 있는 센서 프로그램
+![App](앱이미지.png)
+- 온습도를 체크할 수 있는 센서 프로그램
 ### 앱 링크
 [📌온습도 체크 앱 링크📌](https://github.com/SonSeYoung02/Temp-Humi-Sensor-App)
 
 ### 전체 시스템 구성도
+![전체 구성도](Image/Temp-Humi-Sensor-Image.png)
 
 ## 부품
 ### RaspberryPi 5
