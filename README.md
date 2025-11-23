@@ -12,6 +12,7 @@ uvicorn server:app --host 0.0.0.0 --port 8000
 - server로 파일 이동
 - venv 가상환경 실행
 - uvicorn 서버 실행 0.0.0.0 에 8000번 포트(로컬 실행)
+- venv 가상환경 끄기 `deactivate`
 ## 개요
 온습도를 체크할 수 있는 센서 프로그램<br>
 
