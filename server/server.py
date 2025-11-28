@@ -2,6 +2,12 @@ from fastapi import FastAPI, HTTPException
 import subprocess
 import threading
 import json
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+cred = credentials.Certificate("firebase-key.json") # 파이어베이스 키(비밀키)
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 app = FastAPI()
 
@@ -32,11 +38,15 @@ def reader_thread():
             data = json.loads(line)     # data에 json 파일을 줄단위로 로드
         except json.JSONDecodeError:    # json 파일에서 오류 난 경우
             # JSON 아닐 경우 무시
-            print("[ERROR] JSON 변환 오류, line:", line)
+            print("[ERROR] JSON 변환 오류, line:", line)    # json 변환 오류 메시지
             continue
 
         with data_lock:
             latest_data = data
+
+        doc_id = data["datetime"].replace(" ", "_")  # 예: 2025-11-28_17:52:14
+        db.collection("sensor_logs").document(doc_id).set(data) # 파이어 베이스에 로그 저장
+        print("[FIREBASE] 로그 저장:", doc_id)  # 로그저장 메시지
 
 
 @app.on_event("startup")
@@ -53,7 +63,7 @@ def start_c_program():
         text=True,                  # 텍스트 모드
         bufsize=1,                  # 버퍼 크기 1
     )
-    print("[INFO] C 프로그램 시작, pid =", c_proc.pid)
+    print("[INFO] C 프로그램 시작, pid =", c_proc.pid)  # 프로그램 시작하면 pid 출력후 실행
 
     # stdout 읽는 스레드 시작
     t = threading.Thread(
@@ -81,7 +91,7 @@ def stop_c_program():
 
 @app.get("/") # 메인 화면
 def root():
-    return {"message": "페이지 실행"}
+    return {"message": "페이지 실행"}   # 시작화면에 출력
 
 
 @app.get("/sensor")
@@ -92,9 +102,9 @@ def read_sensor():
     global latest_data
 
     with data_lock:
-        if latest_data is None:
+        if latest_data is None: # 만약 latest 데이터가 0이면
             raise HTTPException(
-                status_code=503, 
-                detail="센서 데이터가 준비되지 않았습니다."
+                status_code=503,    # 에러메시지 503
+                detail="센서 데이터가 준비되지 않았습니다." # 센서 데이터 없음
             )
-        return latest_data
+        return latest_data  # 센서값 반환(last_data가 0이 아니면 실행)

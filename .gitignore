@@ -9,3 +9,6 @@ __pycache__
 
 # vscode 파일들
 .vscode/
+
+#firebase
+firebase-key.json
