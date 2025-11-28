@@ -4,6 +4,7 @@ import threading
 import json
 import firebase_admin
 from firebase_admin import credentials, firestore
+import time
 
 cred = credentials.Certificate("firebase-key.json") # 파이어베이스 키(비밀키)
 firebase_admin.initialize_app(cred)
@@ -43,7 +44,8 @@ def reader_thread():
 
         with data_lock:
             latest_data = data
-
+        
+        doc_id = data["timestamp"] = int(time.time()*1000) # s(초)를 ms(밀리초)로 변환
         doc_id = data["datetime"].replace(" ", "_")  # 예: 2025-11-28_17:52:14
         db.collection("sensor_logs").document(doc_id).set(data) # 파이어 베이스에 로그 저장
         print("[FIREBASE] 로그 저장:", doc_id)  # 로그저장 메시지
