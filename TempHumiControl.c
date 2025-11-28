@@ -8,8 +8,8 @@
 #include "oled96.h"
 
 // 온도 설정
-#define TEMP_HOT 27 // 너무 뜨거운 온도
-#define TEMP_COOL 25 // 너무 추운 온도
+#define TEMP_HOT 25 // 뜨거운 온도
+#define TEMP_COOL 20 // 차가운 온도
 
 // LED 설정
 #define LED_PIN_BLUE 17 // 물리적 PIN 11번

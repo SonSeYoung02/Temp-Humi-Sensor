@@ -5,7 +5,6 @@ gcc dht22.c fonts.c TempHumiControl.c oled96.c -o TempHumiControl.out -lwiringPi
 ```
 - 파일 가장 상단에 위치하도록 생성
 ```bash
-cd server
 source venv/bin/activate
 uvicorn server:app --host 0.0.0.0 --port 8000
 ```
