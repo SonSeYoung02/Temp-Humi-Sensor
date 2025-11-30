@@ -49,5 +49,5 @@ uvicorn server:app --host 0.0.0.0 --port 8000
 ![alt text](Image/PCB_완성.jpg)
 
 ## 참고한 깃허브
-[DHT22(최현욱)](https://github.com/wookookie/DHT22)
-[oled_96](https://github.com/bitbank2/oled_96)
+[DHT22(최현욱)](https://github.com/wookookie/DHT22)<br>
+[oled_96](https://github.com/bitbank2/oled_96)<br>
