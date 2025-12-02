@@ -16,7 +16,7 @@
 #define LED_PIN_LED 22 // 물리적 PIN 15번
 
 // 습도 설정
-#define HUMI_LOW 50.0 // 습도 60% 설정
+#define HUMI_LOW 50.0 // 습도 50% 설정
 #define HUMI_ON_TIME 10000 // 가습기 작동 시작(10초)
 
 // 핀설정
@@ -179,4 +179,3 @@ int main(int argc, char *argv[]){
     }
     return 0;
 }
-
